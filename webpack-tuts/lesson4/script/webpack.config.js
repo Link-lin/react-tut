@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -16,22 +17,38 @@ module.exports = {
             template: "public/index.html",
         }),
         new MiniCssExtractPlugin({
-            filename: "css/[name].[chunkHash:6].css",
+            filename: "static/css/[name].[chunkHash:6].css",
         }),
+        new CopyPlugin([{
+            from: path.resolve(process.cwd(), 'src/static'),
+            to: path.resolve(process.cwd(), 'dist/static')
+        }])
     ],
     module: {
         rules: [{
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader"],
-            }, {
-                test: /\.scss$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", 'sass-loader'],
             },
+            {
+                test: /\.scss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8000,
+                        name: 'static/images/[name].[ext]',
+                        publicPath: '/',
+                    },
+                }, ],
+            }
 
-        ]
+        ],
     },
     devServer: {
         port: 8080,
-        open: true
-    }
-}
+        open: true,
+    },
+};
