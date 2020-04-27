@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from "react-dom";
 
-const App = (props) => {
+const App1 = (props) => {
   return (
     <div>
       {/* */}
@@ -11,5 +11,20 @@ const App = (props) => {
   );
 };
 
+class App extends React.Component {
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <h1>hello world</h1>
+        <p>{this.props.title}</p>
+      </div>
+    );
+  }
+}
 
-ReactDom.render(<App title="1984"/>, document.getElementById("root"));
+const app = new App({
+    title: "sssssss"
+}).render();
+
+ReactDom.render(app, document.getElementById("root"));
