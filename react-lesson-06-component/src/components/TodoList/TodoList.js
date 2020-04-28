@@ -3,10 +3,19 @@ import TodoItem from './TodoItem'
 
 export default class TodoList extends Component {
     render() {
+        console.log(this.props)
         return (
             <ul>
-                <TodoItem></TodoItem>  
-                <TodoItem></TodoItem>  
+                {
+                    this.props.todos.map(todo=>{
+                        return(
+                            <TodoItem 
+                                key={todo.id}
+                                {...todo}
+                            />
+                        )
+                    })
+                }
             </ul>
         )
     }

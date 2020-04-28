@@ -7,17 +7,35 @@ class App extends Component {
     this.state = {
       title: "待办事项",
       desc: "今日事今日毕",
+      article: "<div>hello</div>",
+      todos: [
+        {
+          id: 1,
+          title: "吃饭",
+          assignee: 'link',
+          isCompleted: true,
+        },
+        {
+          id: 2,
+          title: "睡觉",
+          assignee: 'link',
+          isCompleted: false,
+        },
+      ],
     };
   }
 
   render() {
     return (
       <div className="abc">
+       {
+        <div dangerouslySetInnerHTML={{__html:this.state.article}} />
+       }
         <TodoHeader desc={this.state.title} x={1} y={2}>
-        {this.state.desc}
+          {this.state.desc}
         </TodoHeader>
         <TodoInput btnText="Add" />
-        <TodoList></TodoList>
+        <TodoList todos={this.state.todos} />
       </div>
     );
   }
