@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TodoHeader, TodoInput, TodoList } from "./components/index";
+import { TodoHeader, TodoInput, TodoList, Like } from "./components/index";
 
 class App extends Component {
   constructor() {
@@ -36,6 +36,7 @@ class App extends Component {
         </TodoHeader>
         <TodoInput btnText="Add" />
         <TodoList todos={this.state.todos} />
+        <Like />
       </div>
     );
   }
