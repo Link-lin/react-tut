@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
 
-export default class TodoItem extends Component {
+export default class TodoItem extends Component { 
+
+    constructor(){
+        super()
+        this.state = {}
+    }
+    
+    UNSAFE_componentWillMount(){
+        console.log("willMonut")
+    }
     render() {
+        console.log('TodoItem render')
         const{
             isCompleted,
             title
@@ -23,4 +33,6 @@ export default class TodoItem extends Component {
         }= this.props
         onCompletedChange && this.props.onCompletedChange(id)
     }
+
+   
 }
