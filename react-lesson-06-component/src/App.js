@@ -25,6 +25,20 @@ class App extends Component {
     };
   }
 
+  onCompletedChange = (id) => {
+    console.log(id);
+    this.setState((prevState) => {
+      return {
+        todos: this.state.todos.map((todo) => {
+          if (todo.id === id) {
+            todo.isCompleted = !todo.isCompleted;
+          }
+          return todo
+        }),
+      };
+    });
+  };
+
   addTodo = (todoTitle) => {
     //   console.log(todoTitle)
     //   this.setState({
@@ -36,13 +50,13 @@ class App extends Component {
     //   })
     const newTodos = this.state.todos.slice();
     newTodos.push({
-      id: newTodos.length+1,
+      id: newTodos.length + 1,
       title: todoTitle,
       isCompleted: false,
     });
     this.setState({
-        todos : newTodos
-    })
+      todos: newTodos,
+    });
   };
 
   render() {
@@ -53,7 +67,10 @@ class App extends Component {
           {this.state.desc}
         </TodoHeader>
         <TodoInput btnText="Add" addTodo={this.addTodo} />
-        <TodoList todos={this.state.todos} />
+        <TodoList
+          todos={this.state.todos}
+          onCompletedChange={this.onCompletedChange}
+        />
         <Like />
       </div>
     );
