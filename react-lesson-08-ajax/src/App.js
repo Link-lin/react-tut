@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { TodoHeader, TodoInput, TodoList, Like } from "./components/index";
+import { getTodos } from "./services/index";
 
 class App extends Component {
   constructor() {
@@ -8,21 +9,38 @@ class App extends Component {
       title: "待办事项",
       desc: "今日事今日毕",
       article: "<div>hello</div>",
-      todos: [
-        {
-          id: 1,
-          title: "吃饭",
-          assignee: "link",
-          isCompleted: true,
-        },
-        {
-          id: 2,
-          title: "睡觉",
-          assignee: "link",
-          isCompleted: false,
-        },
-      ],
+      todos: [],
+      isLoading: false,
     };
+  }
+
+  getData = () => {
+    this.setState({
+      isLoading: true,
+    });
+    getTodos()
+      .then((resp) => {
+        console.log(resp);
+        if (resp.status === 200) {
+          this.setState({
+            todos: resp.data,
+          });
+        } else {
+          //处理错误
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+
+  componentDidMount() {
+    this.getData()
   }
 
   onCompletedChange = (id) => {
@@ -31,9 +49,9 @@ class App extends Component {
       return {
         todos: this.state.todos.map((todo) => {
           if (todo.id === id) {
-            todo.isCompleted = !todo.isCompleted;
+            todo.completed = !todo.completed;
           }
-          return todo
+          return todo;
         }),
       };
     });
@@ -45,14 +63,14 @@ class App extends Component {
     //       todos: this.state.todos.concat({
     //           id: Math.random(),
     //           title: todoTitle,
-    //           isCompleted: false
+    //           completed: false
     //       })
     //   })
     const newTodos = this.state.todos.slice();
     newTodos.push({
       id: newTodos.length + 1,
       title: todoTitle,
-      isCompleted: false,
+      completed: false,
     });
     this.setState({
       todos: newTodos,
@@ -67,10 +85,14 @@ class App extends Component {
           {this.state.desc}
         </TodoHeader>
         <TodoInput btnText="Add" addTodo={this.addTodo} />
-        <TodoList
-          todos={this.state.todos}
-          onCompletedChange={this.onCompletedChange}
-        />
+        {this.state.isLoading ? (
+          "<div>loading</div>"
+        ) : (
+          <TodoList
+            todos={this.state.todos}
+            onCompletedChange={this.onCompletedChange}
+          />
+        )}
         <Like />
       </div>
     );

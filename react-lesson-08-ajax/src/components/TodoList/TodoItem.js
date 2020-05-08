@@ -11,26 +11,26 @@ export default class TodoItem extends Component {
     
     static getDerivedStateFromProps(props){
         return{
-            completedText: props.isCompleted?'完成':'未完成'
+            completedText: props.completed?'完成':'未完成'
         }
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        return nextProps.isCompleted !== this.props.isCompleted
+        return nextProps.completed !== this.props.completed
     }
   
     render() {
         console.log('TodoItem render')
         const{
-            isCompleted,
+            completed,
             title
         } = this.props 
         return (
             <li>
-                <input type="checkbox" checked={isCompleted}
+                <input type="checkbox" checked={completed}
                 onChange= {this.handleCheckBoxChange}/>
                 { title }
-                { isCompleted ? " 已完成": " 未完成"}
+                { completed ? " 已完成": " 未完成"}
             </li>
         )
     }
