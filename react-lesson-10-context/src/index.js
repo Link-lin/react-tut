@@ -1,23 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { Component, createContext } from "react";
 import ReactDOM from "react-dom";
 
-const Counter = () => {
-  console.log(useState(10));
-  const [count, setCount] = useState(0);
+console.log(createContext());
 
-  useEffect(() =>{
-    console.log('更新了');
-    // eslint-disable-next-line no-template-curly-in-string
-    document.title = `当前的数量为${count}`;
-  })
-  return (
-    <div>
-      <p>当前的数量为{count}</p>
-      <button onClick={() => setCount(count - 1)}>-</button>
-      <span>{count}</span>
-      <button onClick={() => setCount(count + 1)}>+</button>
-    </div>
-  );
-};
+const { Provider, Consumer: CounterConsumer } = createContext();
 
-ReactDOM.render(<Counter />, document.getElementById("root"));
+class CounterProvider extends Component {
+  constructor() {
+    super();
+    this.state = {
+      count: 100,
+    };
+  }
+
+  increaseCount = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+
+  decreaseCount = () => {
+    this.setState({
+      count: this.state.count - 1,
+    });
+  };
+
+  render() {
+    return (
+      <Provider
+        value={{
+          count: this.state.count,
+          onIncreaseCount: this.increaseCount,
+          onDecreseCount: this.decreaseCount,
+        }}
+      >
+        {this.props.children}
+      </Provider>
+    );
+  }
+}
+
+class CountBtn extends Component {
+  render() {
+    return (
+      <CounterConsumer>
+      {
+        ({onIncreaseCount,onDecreseCount}) => {
+          const handler = this.props.type === 'increment' ? onIncreaseCount: onDecreseCount
+          return <button onClick={handler}>{this.props.children} </button>
+        }
+      } 
+      </CounterConsumer>
+      )
+    }
+}
+
+class Counter extends Component {
+  render() {
+    return (
+      <CounterConsumer>
+        {({ count }) => {
+          return <span> {count}</span>;
+        }}
+      </CounterConsumer>
+    );
+  }
+}
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <CountBtn type="decrement">-</CountBtn>
+        <Counter />
+        <CountBtn type="increment">+</CountBtn>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <CounterProvider>
+    <App />
+  </CounterProvider>,
+  document.getElementById("root")
+);
