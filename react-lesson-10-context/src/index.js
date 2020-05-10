@@ -1,8 +1,12 @@
+//
 import React, { Component, createContext } from "react";
 import ReactDOM from "react-dom";
 
 console.log(createContext());
 
+// createContext 这个方法的结果是一个对象,里面有provider和consumer
+// Provider 用于提供状态
+// Consumer 用于接收状态
 const { Provider, Consumer: CounterConsumer } = createContext();
 
 class CounterProvider extends Component {
