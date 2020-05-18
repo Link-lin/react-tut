@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>redux principle</title>
+  </head>
+  <body>
+    <div>
+      <button onclick="dispatch({type:'minus', n:2})">-</button>
+      <span id="countDisplay">10</span>
+      <button onclick="dispatch({type:'plus', n:3})">+</button>
+    </div>
+
+    <script>
+      const countDisplay = document.getElementById("countDisplay");
+      const countState = {
+        count: 5,
+      };
+
+      renderCount = (state) => {
+        countDisplay.innerHTML = state.count;
+      };
+
+      renderCount(countState);
+
+      /*
+      const handleMinus = () => {
+        countState.count -= 1;
+        renderCount(countState);
+      };
+
+      const handlePlus = () => {
+        countState.count += 1;
+        renderCount(countState);
+      };
+      */
+
+      const changeState = (action) => {
+        switch (action.type) {
+          case "minus":
+            countState.count -= action.n;
+            break;
+          case "plus":
+            countState.count += action.n;
+            break;
+          default:
+            break;
+        }
+      };
+
+      const dispatch = (action) => {
+        changeState(action);
+        renderCount(countState);
+      };
+    </script>
+  </body>
+</html>
