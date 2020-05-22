@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { increment, decrement } from "../../actions/cart";
+import { increment, decrement, decrementAsync } from "../../actions/cart";
 class CartList extends Component {
   render() {
     console.log("hello");
@@ -24,6 +24,8 @@ class CartList extends Component {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>
+
+                  <button onClick={this.props.decrementAsync.bind(this, item.id)}>++</button>
                   <button onClick={
                     () => {
                       this.props.decrement(item.id)
@@ -62,4 +64,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 */
 
-export default connect(mapStateToProps, {increment, decrement})(CartList);
+export default connect(mapStateToProps, {increment, decrement, decrementAsync})(CartList);
