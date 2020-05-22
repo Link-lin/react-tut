@@ -1,6 +1,7 @@
-import { combineReducers } from "redux";
-import cart from "./cart";
+import {combineReducers} from 'redux' 
+import blog from './blog'
+
 
 export default combineReducers({
-    cart
+    blog
 })
