@@ -44,7 +44,10 @@ class CartList extends Component {
     );
   }
 }
+
+// mapStateToProps, 这里的state实际上就store.getState()的值
 const mapStateToProps = (state) => {
+  // 这里return了什么，在组件里就可以用this.props来引用
   return {
     cartList: state.cart,
   };
