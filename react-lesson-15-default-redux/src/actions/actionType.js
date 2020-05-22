@@ -1,0 +1,4 @@
+export default {
+    ADD_CART_AMOUNT: 'ADD_CART_AMOUNT',
+    MINUS_CART_AMOUNT:'MINUS_CART_AMOUNT'
+}
