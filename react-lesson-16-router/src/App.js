@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, NavLink as Link, Redirect, Switch } from "react-router-dom";
+import { Button } from "antd";
 
 import { Articles, Home, Users, ArticleDetail } from "./views";
 
@@ -8,6 +9,7 @@ export default class App extends Component {
     console.log(this.props);
     return (
       <div>
+        <Button type="primary"> Button</Button>
         <ul>
           <li>
             <Link to="/home">首页</Link>
