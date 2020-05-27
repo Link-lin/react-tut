@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, NavLink as Link, Redirect, Switch } from "react-router-dom";
 import { Button } from "antd";
+import "antd/dist/antd.css";
 
 import { Articles, Home, Users, ArticleDetail } from "./views";
 
