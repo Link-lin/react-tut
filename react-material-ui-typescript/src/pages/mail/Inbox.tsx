@@ -3,12 +3,12 @@ import MailList from '../../components/MailList';
 import { Paper, Typography, Theme, withStyles } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 
-interface InboxProps {
+interface IInboxProps {
     items: any[];
     classes: any;
 }
 
-class InboxPage extends React.Component<InboxProps, {}> {
+class InboxPage extends React.Component<IInboxProps, {}> {
 
     public render(): JSX.Element {
         const { classes } = this.props;
